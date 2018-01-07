@@ -19,6 +19,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DisplayMessage extends AppCompatActivity {
 
     private ListView listView;
+    private String lastMessage;
+
+    public static final String SENT_MESSAGE = "MSG";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,10 @@ public class DisplayMessage extends AppCompatActivity {
 
         Intent intent = getIntent();
         String consumerKey = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+        if (savedInstanceState != null) {
+            lastMessage = savedInstanceState.getString(SENT_MESSAGE);
+        }
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MessagesAPI.BASE_URL)
@@ -42,14 +50,24 @@ public class DisplayMessage extends AppCompatActivity {
         call.enqueue(new Callback<Messages>() {
             @Override
             public void onResponse(Call<Messages> call, Response<Messages> response) {
-                List<ShortMessages> MessageList = response.body().getMessages();
 
-                String[] Message = new String[MessageList.size()];
+                if(response.isSuccessful()){
+                    List<ShortMessages> MessageList = response.body().getMessages();
 
-                for(int i = 0; i < MessageList.size(); i++){
-                    Message[i] = MessageList.get(i).getText();
+                    if(MessageList.size() > 0){
+                        String[] Message = new String[MessageList.size()];
+                        for(int i = 0; i < MessageList.size(); i++){
+                            Message[i] = MessageList.get(i).getText();
+                        }
+                        listView.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, Message));
+                    }else{
+
+                        Toast.makeText(getApplicationContext(), "No new message there or the key was wrong!", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                 }
-                listView.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, Message));
+
             }
 
             @Override

@@ -1,6 +1,8 @@
 package technikum.fh.messageapp;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btn;
     private EditText et;
     private String consumerKey;
+
     public static final String EXTRA_MESSAGE = "EXTRA";
 
     @Override
@@ -52,11 +55,22 @@ public class MainActivity extends AppCompatActivity {
             t.setGravity(Gravity.CENTER, 0, 0);
             t.show();
         } else {
-            Intent i = new Intent(this, DisplayMessage.class);
-            //i.putExtra(EXTRA_MESSAGE, "consumerKey");
-            i.putExtra(EXTRA_MESSAGE,consumerKey);
-            startActivity(i);
+            if(internetAvailable()){
+                Intent i = new Intent(this, DisplayMessage.class);
+                //i.putExtra(EXTRA_MESSAGE, "consumerKey");
+                i.putExtra(EXTRA_MESSAGE,consumerKey);
+                startActivity(i);
+            }else{
+                Toast.makeText(getApplicationContext(), "No connection to message server available, please check your internet connection!", Toast.LENGTH_SHORT).show();
+            }
+
         }
+    }
+
+    public boolean internetAvailable(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }
 
