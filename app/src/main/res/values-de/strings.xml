@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MessageApp</string>
+    <string name="button1">Nachricht abrufen</string>
+    <string name="txt">Key: </string>
+    <string name="txtPass">Bitte Key eingeben!</string>
+    <string name="txt2">Nachricht: </string>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MessageApp</string>
+    <string name="button1">Receive Message</string>
+    <string name="txt">Key: </string>
+    <string name="txtPass">Insert key and click the button!</string>
+    <string name="txt2">Message: </string>
+</resources>
