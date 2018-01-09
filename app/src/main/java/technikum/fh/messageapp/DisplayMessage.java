@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import okhttp3.CertificatePinner;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,9 +40,18 @@ public class DisplayMessage extends AppCompatActivity {
             lastMessage = savedInstanceState.getString(SENT_MESSAGE);
         }
 
+        CertificatePinner certificatePinner = new CertificatePinner.Builder()
+                .add("short-messages-web-api.azurewebsites.net", "sha256/OtGR7ixvqZTxaH6c5Vpeje4IUMgdfqgYdIq5ZykUcgc=")
+                .build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .certificatePinner(certificatePinner)
+                .build();
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MessagesAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build();
 
         MessagesAPI api = retrofit.create(MessagesAPI.class);

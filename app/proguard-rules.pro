@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.squareup.okhttp.** { *; }
+-keep class retrofit.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+# for the interfaces
+-keepclasseswithmembers class * {
+@retrofit.http.* <methods>;
+}
+# If in your rest service interface you use methods with Callback argument.
+-keepattributes Exceptions
+# If your rest service methods throw custom exceptions, because you've defined an ErrorHandler
+-keepattributes Signature
+# Hide Warnings - these classes wont be used
+-dontwarn okio.**
+-dontwarn retrofit2.Platform$Java8
+-dontwarn org.w3c.dom.bootstrap.DOMImplementationRegistry

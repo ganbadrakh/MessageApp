@@ -2,9 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-<<<<<<< HEAD
-    <mapping directory="$PROJECT_DIR$/MessageApp" vcs="Git" />
-=======
->>>>>>> d6db7b4dd039fec5b2335853dddbc8a8c52fa137
   </component>
 </project>
