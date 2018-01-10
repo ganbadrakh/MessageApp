@@ -3,16 +3,16 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'key0'
-            keyPassword 'muzda13-dachE'
-            storeFile file('C:/Users/kerberos/Documents/ic16m020-KEYSTORE.jks')
-            storePassword 'muzda13-dachE'
+            keyAlias 'key'
+            keyPassword '1234567'
+            storeFile file('C:/Users/kerberos/android.jks')
+            storePassword '1234567'
         }
     }
     compileSdkVersion 27
     defaultConfig {
         applicationId "technikum.fh.messageapp"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -22,8 +22,16 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //buildConfigField INT, VAR_LOGLEVEL, LOG + ".LOG_LEVEL_ERROR"
             signingConfig signingConfigs.config
+            debuggable false
         }
+        /*
+        debug {
+            minifyEnabled false
+            buildConfigField INT, VAR_LOGLEVEL, LOG + ".LOG_LEVEL_VERBOSE"
+        }
+        */
     }
     productFlavors {
     }
@@ -38,4 +46,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation files('src/main/java/technikum/fh/messageapp/unsecure_app-release-dex2jar.jar')
 }

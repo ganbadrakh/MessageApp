@@ -35,3 +35,9 @@
 -dontwarn okio.**
 -dontwarn retrofit2.Platform$Java8
 -dontwarn org.w3c.dom.bootstrap.DOMImplementationRegistry
+
+-ignorewarnings
+
+-keep class * {
+    public private *;
+}
